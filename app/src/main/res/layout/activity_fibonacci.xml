@@ -34,7 +34,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="42dp"
         android:clickable="true"
-        android:elegantTextHeight="true" />
+        android:elegantTextHeight="true"
+        android:onClick="getFibonacciResult" />
 
     <Button
         android:layout_width="match_parent"
