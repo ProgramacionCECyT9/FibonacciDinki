@@ -52,7 +52,7 @@ public class Main extends ActionBarActivity {
         @Override protected void onPreExecute() {
             taskProgress = new ProgressDialog(Main.this);
             taskProgress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            taskProgress.setMessage("Slaves Working...");
+            taskProgress.setMessage("Black Slaves Working...");
             taskProgress.setCancelable(true);
             taskProgress.setOnCancelListener(new DialogInterface.OnCancelListener() {
 
@@ -62,8 +62,6 @@ public class Main extends ActionBarActivity {
                 }
 
             });
-            taskProgress.setMax(100);
-            taskProgress.setProgress(0);
             taskProgress.show();
         }
 
@@ -99,7 +97,6 @@ public class Main extends ActionBarActivity {
         @Override protected void onCancelled() {
             outputText.setText("Process canceled...");
         }
-
     }
 
     // Method to calculate the factorial number
@@ -108,10 +105,54 @@ public class Main extends ActionBarActivity {
         if (number < 0){
             outputText.setText("Impossible to calculate factorial of negative numbers");
         } else {
-            /*factorialMethod factorial = new factorialMethod();
-            factorialMethod.execute(number);*/
+            factorialMethod factorial = new factorialMethod();
+            factorial.execute(number);
+        }
+    }
+
+    class factorialMethod extends AsyncTask<Integer, Integer, Integer> {
+
+        private ProgressDialog taskProgress;
+
+        @Override protected void onPreExecute() {
+            taskProgress = new ProgressDialog(Main.this);
+            taskProgress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            taskProgress.setMessage("White Slaves Working...");
+            taskProgress.setCancelable(true);
+            taskProgress.setOnCancelListener(new DialogInterface.OnCancelListener() {
+
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    factorialMethod.this.cancel(true);
+                }
+
+            });
+            taskProgress.show();
         }
 
+        @Override protected Integer doInBackground(Integer... n) {
+            int result = 1;
+            int baseNumber = n[0];
+            if(baseNumber == 1 || baseNumber == 0) {
+                return 1;
+            }
+            else {
+                for (int i = 2; i <= baseNumber && !isCancelled(); i++) {
+                    result *= i;
+                    SystemClock.sleep(150);
+                }
+                return result;
+            }
+        }
+
+        @Override protected void onPostExecute(Integer result) {
+            taskProgress.dismiss();
+            outputText.setText("Factorial result : " + result +"");
+        }
+
+        @Override protected void onCancelled() {
+            outputText.setText("Process canceled...");
+        }
     }
 
     @Override

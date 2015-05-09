@@ -43,7 +43,8 @@
         android:text="Factorial"
         android:id="@+id/factorialButton"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="getFactorialResult" />
 
     <TextView
         android:layout_width="match_parent"
